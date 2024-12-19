@@ -1,8 +1,22 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShadyCode.DomainDrivenDesign", "src\ShadyCode.DomainDrivenDesign\ShadyCode.DomainDrivenDesign.csproj", "{195B7586-3BFD-4E6A-9E6B-5417E6AF7D1E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShadyCode.DomainDrivenDesign.UnitTests", "test\ShadyCode.DomainDrivenDesign.UnitTests\ShadyCode.DomainDrivenDesign.UnitTests.csproj", "{AE729B84-5E31-42EF-A3B5-639F07F07102}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{195B7586-3BFD-4E6A-9E6B-5417E6AF7D1E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{195B7586-3BFD-4E6A-9E6B-5417E6AF7D1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{195B7586-3BFD-4E6A-9E6B-5417E6AF7D1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{195B7586-3BFD-4E6A-9E6B-5417E6AF7D1E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE729B84-5E31-42EF-A3B5-639F07F07102}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE729B84-5E31-42EF-A3B5-639F07F07102}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE729B84-5E31-42EF-A3B5-639F07F07102}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE729B84-5E31-42EF-A3B5-639F07F07102}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
