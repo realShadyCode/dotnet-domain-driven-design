@@ -16,8 +16,21 @@ using System.Collections.Generic;
 
 namespace ShadyCode.DomainDrivenDesign
 {
+    /// <summary>
+    /// The base type for classes that represent entities.
+    /// </summary>
+    /// <remarks>
+    /// An entity is identified solely by its identity. If two entities of the same type has the same identifier value,
+    /// they are considered equal. This is true even if they otherwise contain different data.
+    /// </remarks>
+    /// <typeparam name="TIdentifier">The type used to uniquely identify the entity.</typeparam>
     public abstract class Entity<TIdentifier> : IEquatable<Entity<TIdentifier>>
     {
+        /// <summary>
+        /// Creates a new instance of <see cref="Entity{TIdentifier}"/>.
+        /// </summary>
+        /// <param name="identifier">The entity identifier.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="identifier" /> is <see langword="null" />.</exception>
         protected Entity(TIdentifier identifier)
         {
             if (identifier == null)
@@ -28,8 +41,15 @@ namespace ShadyCode.DomainDrivenDesign
             Identifier = identifier;
         }
 
+        /// <summary>
+        /// The identifier.
+        /// </summary>
         protected TIdentifier Identifier { get; }
         
+        /// <summary>Determines whether the specified object is equal to the current object.</summary>
+        /// <param name="obj">The object to compare with the current object.</param>
+        /// <returns>
+        /// <see langword="true" /> if the specified object  is equal to the current object; otherwise, <see langword="false" />.</returns>
         public bool Equals(Entity<TIdentifier> other)
         {
             if (other is null) return false;
@@ -37,6 +57,7 @@ namespace ShadyCode.DomainDrivenDesign
             return EqualityComparer<TIdentifier>.Default.Equals(Identifier, other.Identifier);
         }
 
+        /// <inheritdoc />
         public override bool Equals(object obj)
         {
             if (obj is null) return false;
@@ -71,9 +92,33 @@ namespace ShadyCode.DomainDrivenDesign
             return lhs.Equals(rhs);
         }
         
-        public static bool operator !=(Entity<TIdentifier> lhs, Entity<TIdentifier> rhs) => !(lhs == rhs);
-        public static bool operator !=(Entity<TIdentifier> lhs, object rhs) => !(lhs == rhs);
+        public static bool operator !=(Entity<TIdentifier> lhs, Entity<TIdentifier> rhs)
+        {
+            if (lhs is null)
+            {
+                if (rhs is null)
+                    return false;
 
+                return true;
+            }
+
+            return !lhs.Equals(rhs);
+        }
+        
+        public static bool operator !=(Entity<TIdentifier> lhs, object rhs)
+        {
+            if (lhs is null)
+            {
+                if (rhs is null)
+                    return false;
+
+                return true;
+            }
+
+            return !lhs.Equals(rhs);
+        }
+
+        /// <inheritdoc />
         public override int GetHashCode()
         {
             return EqualityComparer<TIdentifier>.Default.GetHashCode(Identifier);
