@@ -1,0 +1,45 @@
+name: Release
+
+on:
+  release: 
+    types:
+      - published
+        
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    if: ${{ startsWith(github.ref, 'refs/tags/v') }}
+    name: Build, test and release
+    steps:
+      - uses: nowsprinting/check-version-format-action@v3
+        id: version
+        with:
+          prefix: 'v'
+      - name: Invalid SemVer check
+        if: steps.version.outputs.is_valid == 'true'
+        run: core.setFailed("Valid SemVer version found - ${{steps.version.outputs.full}}")
+      - name: Invalid SemVer check
+        if: steps.version.outputs.is_valid == 'false'
+        run: core.setFailed("Invalid SemVer version found - ${{steps.version.outputs.full}}")
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ vars.DOTNET_VERSION }}
+      - name: Restore NuGet dependencies
+        run: dotnet restore
+      - name: Build solution
+        run: dotnet build --no-restore --configuration Release
+      - name: Run tests
+        run: dotnet test --no-restore --no-build --configuration Release --verbosity normal --logger trx --results-directory ./TestResults
+      - name: Upload test results
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-results
+          path: ./TestResults
+        if: ${{ always() }}
+      - name: Pack NuGet package
+        run: dotnet pack --no-restore --no-build --configuration Release --output ./output/ -p:Version=${{ steps.version.outputs.full_without_prefix }}
+      - name: Push Nuget package
+        run: dotnet nuget push ./output/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
