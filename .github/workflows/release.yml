@@ -15,9 +15,9 @@ jobs:
         id: version
         with:
           prefix: 'v'
-      - name: Invalid SemVer check
+      - name: Valid SemVer check
         if: steps.version.outputs.is_valid == 'true'
-        run: core.setFailed("Valid SemVer version found - ${{steps.version.outputs.full}}")
+        run: echo "Valid SemVer version found - ${{steps.version.outputs.full}}"
       - name: Invalid SemVer check
         if: steps.version.outputs.is_valid == 'false'
         run: core.setFailed("Invalid SemVer version found - ${{steps.version.outputs.full}}")
