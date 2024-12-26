@@ -3,18 +3,18 @@ using Xunit;
 
 namespace ShadyCode.DomainDrivenDesign.UnitTests.Entity;
 
-public sealed class CreateEntityWithNullablePrimitiveIdentifierTests
+public sealed class InstantiateEntityWithObjectIdentifierTests
 {
     [Fact]
     public void WHEN_Identifier_is_set_to_null_value_THEN_Throw_exception()
     {
         // Arrange
-        int? identifier = null;
+        const ObjectIdentifier identifier = null;
 
         try
         {
             // Act
-            var testEntity = new NullablePrimitiveTestEntity(identifier);
+            var testEntity = new ObjectTestEntity(identifier);
 
             // Assert - Unexpected
             Assert.Fail("Expected that ArgumentNullException should have been thrown.");
@@ -35,10 +35,10 @@ public sealed class CreateEntityWithNullablePrimitiveIdentifierTests
     public void WHEN_Identifier_is_set_to_non_null_value_THEN_Identifier_set_to_provided_value()
     {
         // Arrange
-        int? expectedIdentifier = 1337;
+        var expectedIdentifier = new ObjectIdentifier(1337);
 
         // Act
-        var testEntity = new NullablePrimitiveTestEntity(expectedIdentifier);
+        var testEntity = new ObjectTestEntity(expectedIdentifier);
         var actualIdentifier = testEntity.TestIdentifier;
 
         // Assert
