@@ -3,7 +3,7 @@ using Xunit;
 
 namespace ShadyCode.DomainDrivenDesign.UnitTests.Entity;
 
-public sealed class HashCodeTests
+public sealed class CalculateHashCodeTests
 {
     [Fact]
     public void WHILE_Identifier_is_primitive_WHEN_Getting_hash_code_THEN_Return_identifier_hash_code()

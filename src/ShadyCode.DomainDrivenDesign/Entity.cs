@@ -46,24 +46,45 @@ namespace ShadyCode.DomainDrivenDesign
         /// </summary>
         protected TIdentifier Identifier { get; }
         
-        /// <summary>Determines whether the specified object is equal to the current object.</summary>
+        /// <summary>Determines whether two object instances are equal.</summary>
         /// <param name="obj">The object to compare with the current object.</param>
         /// <returns>
-        /// <see langword="true" /> if the specified object  is equal to the current object; otherwise, <see langword="false" />.</returns>
-        public bool Equals(Entity<TIdentifier> other)
+        ///     <see langword="true" /> if the specified object  is equal to the current object; otherwise, <see langword="false" />.
+        /// </returns>
+        public bool Equals(Entity<TIdentifier> obj)
         {
-            if (other is null) return false;
-            if (ReferenceEquals(this, other)) return true;
-            return EqualityComparer<TIdentifier>.Default.Equals(Identifier, other.Identifier);
+            if (obj is null)
+            {
+                return false;
+            }
+            
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+            
+            return EqualityComparer<TIdentifier>.Default.Equals(Identifier, obj.Identifier);
         }
 
         /// <inheritdoc />
         public override bool Equals(object obj)
         {
-            if (obj is null) return false;
-            if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != GetType()) return false;
-            return Equals((Entity<TIdentifier>)obj);
+            if (obj is null)
+            {
+                return false;
+            }
+            
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+
+            if (obj.GetType() != GetType())
+            {
+                return false;
+            }
+            
+            return Equals((Entity<TIdentifier>) obj);
         }
         
         public static bool operator ==(Entity<TIdentifier> lhs, Entity<TIdentifier> rhs)

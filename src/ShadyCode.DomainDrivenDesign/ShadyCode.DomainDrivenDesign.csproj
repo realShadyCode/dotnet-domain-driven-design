@@ -1,7 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>netstandard2.0</TargetFramework>
+        <Title>Domain Driven Design Components</Title>
+        <Authors>ShadyCode, Michel Gammelgaard</Authors>
+        <Description>Base classes for projects conforming to Domain Driven Design principles.</Description>
+        <PackageProjectUrl>https://github.com/realShadyCode/dotnet-domain-driven-design</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/realShadyCode/dotnet-domain-driven-design</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageTags>DDD;Domain Driven Design</PackageTags>
+        <Copyright>Copyright 2024 ShadyCode, Michel Gammelgaard</Copyright>
+        <Company>ShadyCode</Company>
+        <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+        <TargetFrameworks>netstandard2.0;net462</TargetFrameworks>
     </PropertyGroup>
 
 </Project>
