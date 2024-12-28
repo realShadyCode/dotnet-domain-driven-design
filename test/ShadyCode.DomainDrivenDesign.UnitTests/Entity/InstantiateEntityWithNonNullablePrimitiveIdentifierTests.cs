@@ -3,7 +3,7 @@ using Xunit;
 
 namespace ShadyCode.DomainDrivenDesign.UnitTests.Entity;
 
-public sealed class CreateEntityWithNonNullablePrimitiveIdentifierTests
+public sealed class InstantiateEntityWithNonNullablePrimitiveIdentifierTests
 {
     [Fact]
     public void THEN_Identifier_set_to_provided_value()

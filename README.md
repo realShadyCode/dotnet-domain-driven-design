@@ -16,14 +16,15 @@ public sealed class Basket : Entity<Guid>
 {
   public Basket(Guid identifier, Address invoiceAddress, Address? deliveryAddress) : base(identifier)
   {
-     InvoiceAddress = invoiceAddress;
-     DeliveryAddress = deliveryAddress;
+    InvoiceAddress = invoiceAddress;
+    DeliveryAddress = deliveryAddress;
   }
   
   public Address InvoiceAddress { get; }
   public Address? DeliveryAddress { get; }
 }
 ```
+
 Any type can technically be used as the identifier of an entity. Keep in mind though, that custom identifier classes should implement the `IEquatable<T>` interface.
 
 ### The Identifier
@@ -41,7 +42,9 @@ public sealed class Basket : Entity<Guid>
 ```
 
 ### Comparing
-The `Equals()` methods are implemented to only compare the Identifiers. So are the `==` and `!=` operators.
+Value objects can be compared using the `Equals()` method, as well as the `==` and `!=` operators.
+
+Only the entity identifiers will be compared.
 
 ```csharp
 var basket1 = new Basket(Guid.Parse("b7f8551e-5379-4c59-92dd-2f9ad845fd3c"));
@@ -52,12 +55,50 @@ var isTheBaseBasketOperator = basket1 == basket2; // isTheBaseBasketOperator = t
 ```
 
 ## Value
-Coming soon...
+The class [Value](src/ShadyCode.DomainDrivenDesign/Value.cs) provides a base class for classes that represent value objects.
 
-### Auto Value
+- Value objects are by definition identity-less.
+- Two value objects are considered equal if they have the same value.
+- Values objects are immutable. Any changes to the value(s) of a value object should create a new instance of the value object, instead of changing the existing object.
+
+```csharp
+public sealed class Money : Value<Money>
+{
+    public Money(int amount, Currency currency)
+    {
+        if (amount < 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(amount), "The argument must by larger than or equal to 0 (zero).");
+        }
+        
+        Amount = amount;
+        Currency = currency;
+    }
+
+    public int Amount { get; }
+    public Currency Currency { get; }
+    
+    protected override List<object> GetObjectsForEqualityCheck()
+    {
+        return [Amount, Currency];
+    }
+}
+```
+
+### Comparing
+Value objects can be compared using the `Equals()` method, as well as the `==` and `!=` operators.
+
+The fields that should be included in the comparison must be provided in the list returned by the abstract method `GetObjectsForEqualityCheck()`.
+
+### Mutability
+The current [Value](src/ShadyCode.DomainDrivenDesign/Value.cs) base class implementation does not support mutability. This means that the a value object is "locked" to the initial value(s) when comparing to other value objects.
+
+Please make sure to conform to the before-mentioned DDD principle that states that value objects should be immutable.
+
+## Auto Value
 Coming soon... but a little later.
 
-### Tiny Types
+## Tiny Types
 Coming at some point...
 
 *Copyright © 2024 ShadyCode, Michel Gammelgaard. All rights reserved. Provided under the [Apache License, Version 2.0](http://apache.org/licenses/LICENSE-2.0.html).*
